@@ -33,23 +33,10 @@ newframe={ 	"city":city,
 trynew=pd.DataFrame(newframe)
 trynew.to_csv('cleanearthquake.csv',encoding='utf-8')
 
-'''
-print(trynew)
-with open("cleanearthquake.csv","w") as f:
-	write=csv.writer(f)
-'''
-	#distance.append(temp[0][-9:-2:])
-'''
-print(distance)
-
-for x in distance:
-	if '方' in x:
-		distance2.append(float(x[-3:]))
-	if '公' in x:
-		pass
-	else:
-		distance2.append(float(x))
-
-distance=distance2
-#print(distance)
-'''
+a=trynew.loc[trynew['magnitude']>5]
+b=trynew['magnitude']>6
+for x in range(0,9):
+	temp=trynew['magnitude']>x
+	temp2=temp.value_counts(sort=False)
+	
+	
