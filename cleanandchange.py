@@ -31,12 +31,16 @@ newframe={ 	"city":city,
 			"depth":depth,
 			"magnitude":mag}
 trynew=pd.DataFrame(newframe)
-trynew.to_csv('cleanearthquake.csv',encoding='utf-8')
 
-a=trynew.loc[trynew['magnitude']>5]
-b=trynew['magnitude']>6
-for x in range(0,9):
-	temp=trynew['magnitude']>x
-	temp2=temp.value_counts(sort=False)
-	
-	
+
+trynew2=trynew[::-1]
+previousn=50 #50 if from paper, sum the previous 50 n 
+grutenb=list();
+for i in range(0,10012):
+	temp=trynew.ix[i:i+49:1,4]
+	meanmag=temp.sum()/previousn
+	grutenb.append(0.434/(meanmag-temp.min())) #0.434 is log e from paper
+grutenb=pd.DataFrame({'b':grutenb})
+trynew=pd.concat([trynew,grutenb], ignore_index=True, axis=1)
+print(trynew)
+trynew.to_csv('cleanearthquake.csv',encoding='utf-8')
